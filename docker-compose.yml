@@ -1,0 +1,45 @@
+version: "3"
+
+services:
+  node:
+    build: ./students-backend
+    container_name: students-backend
+    command: bash
+    tty: true
+    stdin_open: true
+    restart: always
+    working_dir: /app
+    volumes:
+      - ./students-backend/:/app
+    depends_on:
+      - db
+    ports:
+      - 3000:3000
+      - 5555:5555
+    environment:
+      DATABASE_URL: postgres://postgres:password@db:5432/Students?schema=public
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_HOST: db
+      JWT_SECRET: secretJWT
+      PORT: 3000
+      NODE_ENV: 'development'
+    networks:
+      - students-net
+
+  db:
+    container_name: students-db
+    image: postgres
+    # platform: linux/x86_64
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: password
+    networks:
+      - students-net
+
+networks:
+  students-net:
+    driver: bridge
+
