@@ -12,20 +12,14 @@ services:
     volumes:
       - ./students-backend/:/app
     depends_on:
-      - db
+      - create-student-engine
     ports:
       - 3000:3000
       - 5555:5555
     environment:
-      DATABASE_URL: postgres://postgres:password@db:5432/Students?schema=public
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
-      POSTGRES_HOST: db
       JWT_SECRET: secretJWT
-      PORT: 3000
       NODE_ENV: 'development'
-    networks:
-      - students-net
+    network_mode: host
 
   create-student-engine:
     build: ./create-student-engine
@@ -39,32 +33,19 @@ services:
       - ./create-student-engine/:/app
     depends_on:
       - db
-    ports:
-      - 3001:3001
     environment:
       DATABASE_URL: postgres://postgres:password@db:5432/Students?schema=public
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
       POSTGRES_HOST: db
       JWT_SECRET: secretJWT
-      PORT: 3001
       NODE_ENV: 'development'
-    networks:
-      - students-net
+    network_mode: host
 
   db:
     container_name: students-db
     image: postgres
-    # platform: linux/x86_64
     restart: always
-    ports:
-      - 5432:5432
     environment:
       POSTGRES_PASSWORD: password
-    networks:
-      - students-net
-
-networks:
-  students-net:
-    driver: bridge
-
+    network_mode: host

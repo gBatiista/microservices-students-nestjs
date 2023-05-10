@@ -1,4 +1,5 @@
 import { Controller, Get } from '@nestjs/common';
+import { Observable } from 'rxjs';
 import { AppService } from './app.service';
 
 @Controller()
@@ -8,5 +9,10 @@ export class AppController {
   @Get()
   getHello(): string {
     return this.appService.getHello();
+  }
+
+  @Get('/student')
+  async getStudent(): Promise<Observable<string>> {
+    return this.appService.getStudent();
   }
 }
