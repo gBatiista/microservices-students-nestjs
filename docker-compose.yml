@@ -69,6 +69,22 @@ services:
       DATABASE_URL: postgres://postgres:password@localhost:5432/Students?schema=public
     network_mode: host
 
+  delete-student-engine:
+    build: ./delete-student-engine
+    container_name: delete-student-engine
+    command: bash
+    tty: true
+    stdin_open: true
+    restart: always
+    working_dir: /app
+    volumes:
+      - ./delete-student-engine/:/app
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgres://postgres:password@localhost:5432/Students?schema=public
+    network_mode: host
+
   db:
     container_name: students-db
     image: postgres

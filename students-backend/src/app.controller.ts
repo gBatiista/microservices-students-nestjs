@@ -1,8 +1,15 @@
 import { CreateStudentDto } from './dto/create-student-dto';
-import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { AppService } from './app.service';
 import { UpdateStudentDto } from './dto/update-student-dto';
-import { Request } from 'express';
 
 @Controller()
 export class AppController {
@@ -35,5 +42,10 @@ export class AppController {
       ...body,
     };
     return this.appService.updateStudent(updateDto);
+  }
+
+  @Delete('/student/:id')
+  async deleteStudent(@Param('id') id: string) {
+    return this.appService.deleteStudent(Number(id));
   }
 }

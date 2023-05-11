@@ -1,3 +1,4 @@
+import { Request } from 'express';
 import { CreateStudentDto } from './dto/create-student-dto';
 import { Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
@@ -9,6 +10,7 @@ export class AppService {
     @Inject('CREATE-STUDENT') private readonly createStudentClient: ClientProxy,
     @Inject('FIND-STUDENT') private readonly findStudentClient: ClientProxy,
     @Inject('UPDATE-STUDENT') private readonly updateStudentClient: ClientProxy,
+    @Inject('DELETE-STUDENT') private readonly deleteStudentClient: ClientProxy,
   ) {}
   getHello(): string {
     return 'Hello World!';
@@ -45,6 +47,15 @@ export class AppService {
     const result = await this.updateStudentClient.send(
       { cmd: 'update-student' },
       updateDto,
+    );
+
+    return result;
+  }
+
+  async deleteStudent(id: number) {
+    const result = await this.deleteStudentClient.send(
+      { cmd: 'delete-student' },
+      id,
     );
 
     return result;
