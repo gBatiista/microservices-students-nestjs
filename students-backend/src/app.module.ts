@@ -17,6 +17,27 @@ import { ErrorsInterceptor } from './interceptors/errors.interceptor';
           port: 3001,
         },
       },
+      {
+        name: 'FIND-STUDENT',
+        transport: Transport.TCP,
+        options: {
+          port: 3002,
+        },
+      },
+      {
+        name: 'UPDATE-STUDENT',
+        transport: Transport.TCP,
+        options: {
+          port: 3003,
+        },
+      },
+      {
+        name: 'DELETE-STUDENT',
+        transport: Transport.TCP,
+        options: {
+          port: 3004,
+        },
+      },
     ]),
   ],
   controllers: [AppController],

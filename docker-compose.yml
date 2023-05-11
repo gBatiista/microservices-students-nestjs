@@ -37,6 +37,38 @@ services:
       DATABASE_URL: postgres://postgres:password@localhost:5432/Students?schema=public
     network_mode: host
 
+  find-student-engine:
+    build: ./find-student-engine
+    container_name: find-student-engine
+    command: bash
+    tty: true
+    stdin_open: true
+    restart: always
+    working_dir: /app
+    volumes:
+      - ./find-student-engine/:/app
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgres://postgres:password@localhost:5432/Students?schema=public
+    network_mode: host
+
+  update-student-engine:
+    build: ./update-student-engine
+    container_name: update-student-engine
+    command: bash
+    tty: true
+    stdin_open: true
+    restart: always
+    working_dir: /app
+    volumes:
+      - ./update-student-engine/:/app
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgres://postgres:password@localhost:5432/Students?schema=public
+    network_mode: host
+
   db:
     container_name: students-db
     image: postgres
