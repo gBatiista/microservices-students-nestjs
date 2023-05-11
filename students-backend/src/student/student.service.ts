@@ -1,10 +1,10 @@
-import { CreateStudentDto } from './dto/create-student-dto';
+import { CreateStudentDto } from '../dto/create-student-dto';
 import { Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { UpdateStudentDto } from './dto/update-student-dto';
+import { UpdateStudentDto } from '../dto/update-student-dto';
 
 @Injectable()
-export class AppService {
+export class StudentService {
   constructor(
     @Inject('CREATE-STUDENT') private readonly createStudentClient: ClientProxy,
     @Inject('FIND-STUDENT') private readonly findStudentClient: ClientProxy,
