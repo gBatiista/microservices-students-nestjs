@@ -15,10 +15,8 @@ services:
       - create-student-engine
     ports:
       - 3000:3000
-      - 5555:5555
     environment:
       JWT_SECRET: secretJWT
-      NODE_ENV: 'development'
     network_mode: host
 
   create-student-engine:
@@ -33,13 +31,10 @@ services:
       - ./create-student-engine/:/app
     depends_on:
       - db
+    ports:
+      - 5555:5555
     environment:
-      DATABASE_URL: postgres://postgres:password@db:5432/Students?schema=public
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
-      POSTGRES_HOST: db
-      JWT_SECRET: secretJWT
-      NODE_ENV: 'development'
+      DATABASE_URL: postgres://postgres:password@localhost:5432/Students?schema=public
     network_mode: host
 
   db:

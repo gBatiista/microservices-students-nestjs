@@ -1,3 +1,4 @@
+import { CreateStudentDto } from './dto/create-student-dto';
 import { Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 
@@ -10,8 +11,12 @@ export class AppService {
     return 'Hello World!';
   }
 
-  async getStudent() {
-    console.log('chegou no service');
-    return this.createStudentClient.send({ cmd: 'hello' }, {});
+  async createStudent(student: CreateStudentDto) {
+    const result = await this.createStudentClient.send(
+      { cmd: 'create-student' },
+      student,
+    );
+
+    return result;
   }
 }
