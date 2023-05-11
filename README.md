@@ -1,73 +1,90 @@
 <p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
+  <a href="http://github.com/gBatiista/swift-send-backend/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
 
 [circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
 [circleci-url]: https://circleci.com/gh/nestjs/nest
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+This application is a dockerized CRUD built using Node.js with the Nest.js framework and TypeScript where each part of CRUD is a microservice that connects to a Postgres database through Prisma ORM using JWT authentication system, being able to CRUD students and users.
 
 ## Installation
 
 ```bash
-$ npm install
+$ docker-compose up --build    // note: Wait until the containers finish initializing correctly and the initial commands are completed.
+
+after that attach to user-engine container using:
+$ docker exec -it user-engine bash
+
+and run the following command inside user-engine container:
+$ npx prisma migrate dev --name init
 ```
 
 ## Running the app
 
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
-## Test
+The app is already online at localhost:3000, but if you want to monitor the database you can use the following command inside user-engine container:
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+$ npx prisma studio
 ```
+Now prisma studio is online at localhost:5555
 
-## Support
+Finally, you need to create the first user to start accessing all the routes.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## Routes 
+### Users:
+  1 - Method: `POST` in `('/user')` to create a new user you need to pass in the body of the request a JSON with:
+   - {
 
-## Stay in touch
+    `name: String`,
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+    `email: String`,
 
-## License
+    `password: String`,
 
-Nest is [MIT licensed](LICENSE).
+  }
+
+  2 - Method: `POST` in `('/login')` To login you need to pass in the body of the request a JSON with:
+   - {
+
+    `email: String`,
+
+    `password: String`,
+
+  }
+
+  From now on, you need to include the authorization field in the request headers in the following format: Authorization:  `Bearer ${access_token}`
+
+  3 - Method: `DELETE` in `('/user/:id')` To delete an existing user you need to pass user id in the request parameters.
+
+  4 - Method: `'GET'` in `('/user/:id')` You will receive information about the user.
+
+  5 - Method: `'GET'` in `('/user')` You will receive a list of all users.
+
+  6 - Method: `'PATCH'` in `('/users:id')` To update the information of an existing user, you need to pass the user ID in the request parameters, and the   new information in the request body.
+  
+  ### Students:
+
+  1 - Method: `POST` in `('/student')` to create a new student you need to pass in the body of the request a JSON with:
+   - {
+
+    `name: String`,
+
+    `email: String`,
+
+    `age: Number`,
+    
+    },
+
+  }
+
+  2 - Method: `DELETE` in `('/student/:id')` To delete an existing user you need to pass the student ID in the request parameters.
+
+  3 - Method: `'GET'` in `('/student/:id')` You will receive information about the student.
+
+  4 - Method: `'GET'` in `('/student')` You will receive a list of all students
+  
+  5 - Method: `'PATCH'` in `('/student/:id')` To update the student information.
+  
