@@ -10,7 +10,7 @@ import { catchError } from 'rxjs/operators';
 
 const doException = err => {
   if (err.response) return err;
-  return new HttpException('Student already registered', 409);
+  return new HttpException('Already registered', 409);
 };
 
 @Injectable()

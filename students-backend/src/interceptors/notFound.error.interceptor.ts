@@ -9,7 +9,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 const doException = () => {
-  return new HttpException('Student not found', 404);
+  return new HttpException('Not found', 404);
 };
 
 @Injectable()

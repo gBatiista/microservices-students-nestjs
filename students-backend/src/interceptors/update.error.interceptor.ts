@@ -9,7 +9,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 const doException = () => {
-  return new HttpException('Student not found or wrong body arguments', 400);
+  return new HttpException('Not found or wrong body arguments', 400);
 };
 
 @Injectable()

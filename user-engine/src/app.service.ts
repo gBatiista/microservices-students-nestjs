@@ -17,11 +17,15 @@ export class AppService {
   async findOneUser(id: number) {
     const result = await this.prisma.user.findUnique({ where: { id } });
 
+    if (!result) throw new RpcException('Not Found');
+
     return result;
   }
 
   async findAllUsers() {
     const result = await this.prisma.user.findMany();
+
+    if (result.length === 0) throw new RpcException('Not Found');
 
     return result;
   }
