@@ -12,6 +12,7 @@ This application is a dockerized CRUD built using Node.js with the Nest.js frame
 
 ## Installation
 
+In ./microservices-students-nestjs folder:
 ```bash
 $ docker-compose up --build    // note: Wait until the containers finish initializing correctly and the initial commands are completed.
 
