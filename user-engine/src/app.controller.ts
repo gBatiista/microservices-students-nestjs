@@ -32,4 +32,9 @@ export class AppController {
   async deleteUser(id: number) {
     return this.appService.deleteUser(id);
   }
+
+  @MessagePattern({ cmd: 'find-user-to-login' })
+  async findUserToLogin(email: string) {
+    return this.appService.findUserToLogin(email);
+  }
 }

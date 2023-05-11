@@ -28,4 +28,8 @@ export class UserService {
   async deleteUser(id: number) {
     return this.userClient.send({ cmd: 'delete-user' }, id);
   }
+
+  async findUserToLogin(email: string) {
+    return this.userClient.send({ cmd: 'find-user-to-login' }, email);
+  }
 }

@@ -10,11 +10,13 @@ import {
 } from '@nestjs/common';
 import { CreateUserDto } from '../dto/create-user-dto';
 import { UserService } from './user.service';
+import { Public } from 'src/auth/constants';
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  @Public()
   @Post()
   async createUser(@Body() data: CreateUserDto) {
     return this.userService.createUser(data);

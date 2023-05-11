@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { RpcException } from '@nestjs/microservices';
 import { CreateUserDto } from './dto/create-user-dto';
 import { PrismaService } from './prisma/prisma.service';
 
@@ -38,6 +39,15 @@ export class AppService {
     const result = await this.prisma.user.delete({
       where: { id },
     });
+
+    return result;
+  }
+
+  async findUserToLogin(email: string) {
+    const result = await this.prisma.user.findUnique({ where: { email } });
+
+    // if (!result) throw new RpcException('Not Found');
+    // if (result.password !== password) throw new RpcException('Unauthorized');
 
     return result;
   }
