@@ -1,10 +1,8 @@
 import { Module } from '@nestjs/common';
-import { APP_INTERCEPTOR } from '@nestjs/core';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
-import { ErrorsInterceptor } from './interceptors/errors.interceptor';
 
 @Module({
   imports: [
@@ -41,12 +39,6 @@ import { ErrorsInterceptor } from './interceptors/errors.interceptor';
     ]),
   ],
   controllers: [AppController],
-  providers: [
-    AppService,
-    {
-      provide: APP_INTERCEPTOR,
-      useClass: ErrorsInterceptor,
-    },
-  ],
+  providers: [AppService],
 })
 export class AppModule {}

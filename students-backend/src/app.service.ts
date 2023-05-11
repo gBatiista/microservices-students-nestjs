@@ -1,4 +1,3 @@
-import { Request } from 'express';
 import { CreateStudentDto } from './dto/create-student-dto';
 import { Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
@@ -12,9 +11,6 @@ export class AppService {
     @Inject('UPDATE-STUDENT') private readonly updateStudentClient: ClientProxy,
     @Inject('DELETE-STUDENT') private readonly deleteStudentClient: ClientProxy,
   ) {}
-  getHello(): string {
-    return 'Hello World!';
-  }
 
   async createStudent(createDto: CreateStudentDto) {
     const result = await this.createStudentClient.send(
@@ -57,7 +53,6 @@ export class AppService {
       { cmd: 'delete-student' },
       id,
     );
-
     return result;
   }
 }

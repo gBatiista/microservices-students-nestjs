@@ -8,15 +8,15 @@ import {
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
+const doException = () => {
+  return new HttpException('Student not found', 404);
+};
+
 @Injectable()
-export class ErrorsInterceptor implements NestInterceptor {
+export class NotFoundErrorInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     return next
       .handle()
-      .pipe(
-        catchError(err =>
-          throwError(() => new HttpException('User already registered', 409)),
-        ),
-      );
+      .pipe(catchError(() => throwError(() => doException())));
   }
 }

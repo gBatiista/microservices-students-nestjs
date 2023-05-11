@@ -8,7 +8,6 @@ export class AppService {
 
   async createStudent(student: CreateStudentDto) {
     const created = await this.prisma.student.create({ data: student });
-
     return created;
   }
 }
