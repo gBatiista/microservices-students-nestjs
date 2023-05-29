@@ -50,9 +50,6 @@ export class AppService {
   async findUserToLogin(email: string) {
     const result = await this.prisma.user.findUnique({ where: { email } });
 
-    // if (!result) throw new RpcException('Not Found');
-    // if (result.password !== password) throw new RpcException('Unauthorized');
-
     return result;
   }
 }
