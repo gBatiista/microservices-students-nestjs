@@ -9,7 +9,7 @@ export class AppService {
     const result = await this.prisma.student.findMany();
 
     if (result.length === 0) throw new RpcException('Not Found');
-    console.log();
+
     return result;
   }
 
