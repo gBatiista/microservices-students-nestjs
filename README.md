@@ -14,13 +14,10 @@ This application is a dockerized CRUD built using Node.js with the Nest.js frame
 
 ```bash
 In `./microservices-students-nestjs` folder:
-$ docker-compose up --build    // note: Wait until the containers finish initializing correctly and the initial commands are completed.
 
-after that attach to user-engine container using:
-$ docker exec -it user-engine bash
+$ docker-compose up --build
 
-and run the following command inside user-engine container:
-$ npx prisma migrate dev --name init
+// note: Wait until the containers finish initializing correctly and the initial commands are completed.
 ```
 
 ## Running the app
@@ -28,6 +25,10 @@ $ npx prisma migrate dev --name init
 The app is already online at localhost:3000, but if you want to monitor the database you can use the following command inside user-engine container:
 
 ```bash
+Attach to user-engine container using:
+$ docker exec -it user-engine bash
+
+then use:
 $ npx prisma studio
 ```
 Now prisma studio is online at localhost:5555
