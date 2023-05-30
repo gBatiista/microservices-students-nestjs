@@ -8,32 +8,32 @@ import { UpdateUserDto } from './dto/update-user-dto';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @MessagePattern({ cmd: 'create-user' })
+  @MessagePattern('create-user')
   async createUser(data: CreateUserDto) {
     return this.appService.createUser(data);
   }
 
-  @MessagePattern({ cmd: 'find-one-user' })
-  async findOneUser(id: number) {
-    return this.appService.findOneUser(id);
+  @MessagePattern('find-one-user')
+  async findOneUser(id: string) {
+    return this.appService.findOneUser(Number(id));
   }
 
-  @MessagePattern({ cmd: 'find-all-users' })
+  @MessagePattern('find-all-users')
   async findAllUsers() {
     return this.appService.findAllUsers();
   }
 
-  @MessagePattern({ cmd: 'update-user' })
+  @MessagePattern('update-user')
   async updateUser(updateDto: UpdateUserDto & { id: number }) {
     return this.appService.updateUser(updateDto);
   }
 
-  @MessagePattern({ cmd: 'delete-user' })
-  async deleteUser(id: number) {
-    return this.appService.deleteUser(id);
+  @MessagePattern('delete-user')
+  async deleteUser(id: string) {
+    return this.appService.deleteUser(Number(id));
   }
 
-  @MessagePattern({ cmd: 'find-user-to-login' })
+  @MessagePattern('find-user-to-login')
   async findUserToLogin(email: string) {
     return this.appService.findUserToLogin(email);
   }

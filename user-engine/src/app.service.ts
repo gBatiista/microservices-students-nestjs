@@ -25,6 +25,8 @@ export class AppService {
 
     if (!result) throw new RpcException('Not Found');
 
+    delete result.password;
+
     return result;
   }
 
@@ -33,14 +35,23 @@ export class AppService {
 
     if (result.length === 0) throw new RpcException('Not Found');
 
+    result.forEach((user) => {
+      delete user.password;
+    });
+
     return result;
   }
 
   async updateUser({ id, ...data }) {
+    const hash = await bcrypt.hash(data.password, 10);
+
+    const dataWithHashPassword = { ...data, password: hash };
     const result = await this.prisma.user.update({
       where: { id },
-      data,
+      data: dataWithHashPassword,
     });
+
+    delete result.password;
 
     return result;
   }
@@ -49,6 +60,8 @@ export class AppService {
     const result = await this.prisma.user.delete({
       where: { id },
     });
+
+    delete result.password;
 
     return result;
   }

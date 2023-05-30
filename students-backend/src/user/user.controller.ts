@@ -1,9 +1,12 @@
-import { UpdateUserDto } from './../dto/update-user-dto';
+import { ClientKafka } from '@nestjs/microservices';
+import { UpdateUserDto } from '../dto/update-user-dto';
 import {
   Body,
   Controller,
   Delete,
   Get,
+  Inject,
+  OnModuleInit,
   Param,
   Patch,
   Post,
@@ -17,8 +20,25 @@ import { NotFoundErrorInterceptor } from '../interceptors/notFound.error.interce
 import { UpdateErrorInterceptor } from '../interceptors/update.error.interceptor';
 
 @Controller('user')
-export class UserController {
-  constructor(private readonly userService: UserService) {}
+export class UserController implements OnModuleInit {
+  constructor(
+    private readonly userService: UserService,
+    @Inject('USER-ENGINE') private readonly userClient: ClientKafka,
+  ) {}
+
+  onModuleInit() {
+    const listOfMessages = [
+      'create-user',
+      'find-one-user',
+      'find-all-users',
+      'update-user',
+      'delete-user',
+    ];
+
+    listOfMessages.forEach(message => {
+      this.userClient.subscribeToResponseOf(message);
+    });
+  }
 
   @Public()
   @UseInterceptors(new CreateErrorInterceptor())
@@ -30,7 +50,7 @@ export class UserController {
   @UseInterceptors(new NotFoundErrorInterceptor())
   @Get('/:id')
   async findOneUser(@Param('id') id: string) {
-    return this.userService.findOneUser(Number(id));
+    return this.userService.findOneUser(id);
   }
 
   @UseInterceptors(new NotFoundErrorInterceptor())
@@ -52,6 +72,6 @@ export class UserController {
   @UseInterceptors(new NotFoundErrorInterceptor())
   @Delete('/:id')
   async deleteUser(@Param('id') id: string) {
-    return this.userService.deleteUser(Number(id));
+    return this.userService.deleteUser(id);
   }
 }

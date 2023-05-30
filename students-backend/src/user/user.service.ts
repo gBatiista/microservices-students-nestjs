@@ -1,35 +1,35 @@
 import { UpdateUserDto } from '../dto/update-user-dto';
 import { CreateUserDto } from '../dto/create-user-dto';
-import { ClientProxy } from '@nestjs/microservices';
+import { ClientKafka } from '@nestjs/microservices';
 import { Inject, Injectable } from '@nestjs/common';
 
 @Injectable()
 export class UserService {
   constructor(
-    @Inject('USER-ENGINE') private readonly userClient: ClientProxy,
+    @Inject('USER-ENGINE') private readonly userClient: ClientKafka,
   ) {}
 
   async createUser(data: CreateUserDto) {
-    return this.userClient.send({ cmd: 'create-user' }, data);
+    return this.userClient.send('create-user', data);
   }
 
-  async findOneUser(id: number) {
-    return this.userClient.send({ cmd: 'find-one-user' }, id);
+  async findOneUser(id: string) {
+    return this.userClient.send('find-one-user', id);
   }
 
   async findAllUsers() {
-    return this.userClient.send({ cmd: 'find-all-users' }, {});
+    return this.userClient.send('find-all-users', {});
   }
 
   async updateUser(updateDto: UpdateUserDto) {
-    return this.userClient.send({ cmd: 'update-user' }, updateDto);
+    return this.userClient.send('update-user', updateDto);
   }
 
-  async deleteUser(id: number) {
-    return this.userClient.send({ cmd: 'delete-user' }, id);
+  async deleteUser(id: string) {
+    return this.userClient.send('delete-user', id);
   }
 
   async findUserToLogin(email: string) {
-    return this.userClient.send({ cmd: 'find-user-to-login' }, email);
+    return this.userClient.send('find-user-to-login', email);
   }
 }

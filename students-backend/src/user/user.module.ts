@@ -8,9 +8,15 @@ import { UserController } from './user.controller';
     ClientsModule.register([
       {
         name: 'USER-ENGINE',
-        transport: Transport.TCP,
+        transport: Transport.KAFKA,
         options: {
-          port: 3005,
+          client: {
+            clientId: 'user-engine',
+            brokers: ['localhost:9092'],
+          },
+          consumer: {
+            groupId: 'user-engine',
+          },
         },
       },
     ]),
