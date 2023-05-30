@@ -8,7 +8,7 @@
 
 ## Description
 
-This application is a dockerized CRUD built using Node.js with the Nest.js framework and TypeScript where each part of CRUD is a microservice that connects to a Postgres database through Prisma ORM using JWT authentication system, being able to CRUD students and users.
+This application is a dockerized CRUD built using Node.js with the Nest.js framework and TypeScript where each part of CRUD is a microservice using KAFKA communication that connects to a Postgres database through Prisma ORM using JWT authentication system, being able to CRUD students and users.
 
 ## Installation
 
@@ -22,7 +22,8 @@ $ docker-compose up --build
 
 ## Running the app
 
-The app is already online at localhost:3000, but if you want to monitor the database you can use the following command inside user-engine container:
+The app is already online at localhost:3000, and the Kafdrop on localhost:9000,
+but if you want to monitor the database you can use the following command inside user-engine container:
 
 ```bash
 Attach to user-engine container using:
