@@ -10,6 +10,8 @@
 
 This application is a dockerized CRUD built using Node.js with the Nest.js framework and TypeScript where each part of CRUD is a microservice using KAFKA communication that connects to a Postgres database through Prisma ORM using JWT authentication system, being able to CRUD students and users.
 
+Using https://github.com/obsidiandynamics/kafdrop KAFKA and Kafdrop docker image.
+
 ## Installation
 
 ```bash
