@@ -1,6 +1,6 @@
 FROM node:16.14
 
-RUN npm install -g @nestjs/cli
+RUN npm install --ignore-scripts -g @nestjs/cli
 
 COPY docker-entrypoint.sh /
 
