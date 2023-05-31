@@ -7,7 +7,7 @@ import { AppService } from './app.service';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @MessagePattern({ cmd: 'create-student' })
+  @MessagePattern('create-student')
   async createStudent(student: CreateStudentDto) {
     return this.appService.createStudent(student);
   }

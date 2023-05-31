@@ -8,30 +8,54 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
     ClientsModule.register([
       {
         name: 'CREATE-STUDENT',
-        transport: Transport.TCP,
+        transport: Transport.KAFKA,
         options: {
-          port: 3001,
+          client: {
+            clientId: 'create-student',
+            brokers: ['localhost:9092'],
+          },
+          consumer: {
+            groupId: 'create-student',
+          },
         },
       },
       {
         name: 'FIND-STUDENT',
-        transport: Transport.TCP,
+        transport: Transport.KAFKA,
         options: {
-          port: 3002,
+          client: {
+            clientId: 'find-student',
+            brokers: ['localhost:9092'],
+          },
+          consumer: {
+            groupId: 'find-student',
+          },
         },
       },
       {
         name: 'UPDATE-STUDENT',
-        transport: Transport.TCP,
+        transport: Transport.KAFKA,
         options: {
-          port: 3003,
+          client: {
+            clientId: 'update-student',
+            brokers: ['localhost:9092'],
+          },
+          consumer: {
+            groupId: 'update-student',
+          },
         },
       },
       {
         name: 'DELETE-STUDENT',
-        transport: Transport.TCP,
+        transport: Transport.KAFKA,
         options: {
-          port: 3004,
+          client: {
+            clientId: 'delete-student',
+            brokers: ['localhost:9092'],
+          },
+          consumer: {
+            groupId: 'delete-student',
+          },
         },
       },
     ]),

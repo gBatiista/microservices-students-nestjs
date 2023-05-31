@@ -6,8 +6,8 @@ import { AppService } from './app.service';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @MessagePattern({ cmd: 'delete-student' })
-  async deleteStudent(id: number) {
-    return this.appService.deleteStudent(id);
+  @MessagePattern('delete-student')
+  async deleteStudent(id: string) {
+    return this.appService.deleteStudent(Number(id));
   }
 }

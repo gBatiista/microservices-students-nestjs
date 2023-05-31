@@ -6,7 +6,7 @@ import { AppService } from './app.service';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @MessagePattern({ cmd: 'update-student' })
+  @MessagePattern('update-student')
   async updateStudent(updateDto) {
     return this.appService.updateStudent(updateDto);
   }

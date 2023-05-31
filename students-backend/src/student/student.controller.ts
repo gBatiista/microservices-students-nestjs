@@ -5,6 +5,8 @@ import {
   Controller,
   Delete,
   Get,
+  Inject,
+  OnModuleInit,
   Param,
   Patch,
   Post,
@@ -14,10 +16,29 @@ import { UpdateStudentDto } from '../dto/update-student-dto';
 import { CreateErrorInterceptor } from '../interceptors/create.error.interceptor';
 import { NotFoundErrorInterceptor } from '../interceptors/notFound.error.interceptor';
 import { StudentService } from './student.service';
+import { ClientKafka } from '@nestjs/microservices';
 
 @Controller('/student')
-export class StudentController {
-  constructor(private readonly studentService: StudentService) {}
+export class StudentController implements OnModuleInit {
+  constructor(
+    private readonly studentService: StudentService,
+    @Inject('CREATE-STUDENT') private readonly createStudentClient: ClientKafka,
+    @Inject('FIND-STUDENT') private readonly findStudentClient: ClientKafka,
+    @Inject('UPDATE-STUDENT') private readonly updateStudentClient: ClientKafka,
+    @Inject('DELETE-STUDENT') private readonly deleteStudentClient: ClientKafka,
+  ) {}
+
+  onModuleInit() {
+    const listOfFindMessages = ['find-all-students', 'find-one-student'];
+
+    listOfFindMessages.forEach(message => {
+      this.findStudentClient.subscribeToResponseOf(message);
+    });
+
+    this.createStudentClient.subscribeToResponseOf('create-student');
+    this.updateStudentClient.subscribeToResponseOf('update-student');
+    this.deleteStudentClient.subscribeToResponseOf('delete-student');
+  }
 
   @UseInterceptors(new CreateErrorInterceptor())
   @Post('')
@@ -28,7 +49,7 @@ export class StudentController {
   @UseInterceptors(new NotFoundErrorInterceptor())
   @Get('/:id')
   async findOneStudent(@Param('id') id: string) {
-    return this.studentService.findOneStudent(Number(id));
+    return this.studentService.findOneStudent(id);
   }
 
   @UseInterceptors(new NotFoundErrorInterceptor())
@@ -50,6 +71,6 @@ export class StudentController {
   @UseInterceptors(new NotFoundErrorInterceptor())
   @Delete('/:id')
   async deleteStudent(@Param('id') id: string) {
-    return this.studentService.deleteStudent(Number(id));
+    return this.studentService.deleteStudent(id);
   }
 }

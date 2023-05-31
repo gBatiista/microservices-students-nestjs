@@ -6,13 +6,13 @@ import { AppService } from './app.service';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @MessagePattern({ cmd: 'find-all-students' })
+  @MessagePattern('find-all-students')
   async findAllStudents() {
     return this.appService.findAllStudents();
   }
 
-  @MessagePattern({ cmd: 'find-one-student' })
-  async findOneStudent(id: number) {
-    return this.appService.findOneStudent(id);
+  @MessagePattern('find-one-student')
+  async findOneStudent(id: string) {
+    return this.appService.findOneStudent(Number(id));
   }
 }
