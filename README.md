@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="http://github.com/gBatiista/swift-send-backend/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
+  <a href="http://github.com/gBatiista/microservices-students-nestjs" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
 
 [circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
@@ -96,5 +96,4 @@ Finally, you need to create the first user to start accessing all the routes.
   
   ### This application had the quality and security of its code analyzed and approved by SonarCloud.
   
-  <img src="https://tateater.sirv.com/sonarcloudAnalysis.png" width="1903" height="600" alt="">
-  
+ <img src="https://tateater.sirv.com/sonarcloudAnalysis.png" width="1000" height="500" alt="">
