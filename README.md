@@ -94,3 +94,7 @@ Finally, you need to create the first user to start accessing all the routes.
   
   5 - Method: `'PATCH'` in `('/student/:id')` To update the student information.
   
+  ### This application had the quality and security of its code analyzed and approved by SonarCloud.
+  
+  <img src="https://tateater.sirv.com/sonarcloudAnalysis.png" width="1903" height="600" alt="">
+  
