@@ -96,4 +96,4 @@ Finally, you need to create the first user to start accessing all the routes.
   
   ### This application had the quality and security of its code analyzed and approved by SonarCloud.
   
- <img src="https://tateater.sirv.com/sonarcloudAnalysis.png" width="1000" height="500" alt="">
+ <img src="https://tateater.sirv.com/sonarcloudAnalysis.png" alt="">
