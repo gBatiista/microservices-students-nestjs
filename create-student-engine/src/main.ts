@@ -20,4 +20,4 @@ async function bootstrap() {
   console.log('create - on');
   await app.listen();
 }
-bootstrap();
+bootstrap().catch((error) => console.error(error));
